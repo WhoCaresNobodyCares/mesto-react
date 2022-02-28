@@ -1,0 +1,17 @@
+.body__main {
+  margin: 0 auto 67px auto;
+  max-width: 880px;
+}
+
+@media screen and (max-width: 960px) {
+  .body__main {
+    max-width: calc(100vw - (40px * 2));
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .body__main {
+    margin: 0 auto 48px auto;
+    max-width: calc(100vw - (19px * 2));
+  }
+}

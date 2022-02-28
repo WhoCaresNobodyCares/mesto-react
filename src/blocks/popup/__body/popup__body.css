@@ -1,0 +1,29 @@
+.popup__body {
+  width: 430px;
+  background: var(--white);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 34px 36px 37px 36px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__body {
+    width: calc(100vw - (19px * 2));
+    padding: 25px 22px 25px 22px;
+  }
+}

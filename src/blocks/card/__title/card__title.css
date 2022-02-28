@@ -1,0 +1,9 @@
+.card__title {
+  margin: 0;
+  color: var(--black);
+  font: 900 24px/30px "Inter", arial, sans-serif;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

@@ -1,0 +1,11 @@
+:root {
+  --black: #000;
+  --black-transparent: rgba(0, 0, 0, 0.5);
+  --black-transparent-input: rgba(0, 0, 0, 0.2);
+  --black-transparent-submit: rgba(0, 0, 0, 0.8);
+  --black-transparent-modal: rgba(0, 0, 0, 0.9);
+  --white: #fff;
+  --grey: #545454;
+  --grey-transparent: rgba(33%, 33%, 33%, 0.7);
+  --error: #f00;
+}

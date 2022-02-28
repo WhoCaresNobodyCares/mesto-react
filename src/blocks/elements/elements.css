@@ -1,0 +1,11 @@
+.elements {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+  grid-template-rows: 361px;
+  grid-auto-columns: minmax(282px, 1fr);
+  grid-auto-rows: 361px;
+  -webkit-column-gap: 17px;
+  -moz-column-gap: 17px;
+  column-gap: 17px;
+  row-gap: 20px;
+}

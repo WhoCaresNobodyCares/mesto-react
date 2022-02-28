@@ -1,0 +1,7 @@
+.card__wrap {
+  margin: 0 0 0 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

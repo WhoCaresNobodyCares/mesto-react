@@ -1,0 +1,19 @@
+.profile__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--black-transparent-submit);
+  opacity: 0;
+  background-image: url('../../../images/profile__edit.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px 26px;
+  transition: opacity 0.2s ease-out;
+}
+
+.profile__overlay:hover {
+  opacity: 1;
+  cursor: pointer;
+}

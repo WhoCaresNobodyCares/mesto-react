@@ -1,0 +1,6 @@
+.popup__caption {
+  margin: 10px 0 0 0;
+  color: var(--white);
+  font: 400 18px/22px "Inter", arial, sans-serif;
+  text-align: left;
+}

@@ -1,5 +1,15 @@
 import React from 'react';
 
-const Header = () => {};
+import logoPath from '../images/header__logo.svg';
+
+const Header = () => {
+  return (
+    <header className='header body__header'>
+      <a href='#' className='header__link'>
+        <img src={logoPath} alt='Логотип' className='header__logo' />
+      </a>
+    </header>
+  );
+};
 
 export default Header;
