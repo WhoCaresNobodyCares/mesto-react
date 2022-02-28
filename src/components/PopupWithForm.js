@@ -8,7 +8,7 @@ const PopupWithForm = props => {
         <h2 className='popup__title'>{props.title}</h2>
         <form action='#' method='post' name={props.formName} id={props.formId} className='popup__form'>
           {props.children}
-          <button type='submit' class='popup__submit'>
+          <button type='submit' className='popup__submit'>
             {props.buttonText}
           </button>
         </form>

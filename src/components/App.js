@@ -14,16 +14,7 @@ function App() {
       <Footer />
 
       <PopupWithForm id='profileEditPopup' title='Редактировать профиль' formName='editForm' formId='editPopupForm' buttonText='Сохранить'>
-        <input
-          className='popup__input'
-          type='text'
-          name='nameInput'
-          id='nameInput'
-          placeholder='Имя'
-          minLength='2'
-          maxLength='40'
-          required
-        />
+        <input className='popup__input' type='text' name='nameInput' id='nameInput' placeholder='Имя' minLength='2' maxLength='40' required />
         <span id='nameInput-err' className='popup__error'></span>
         <input
           className='popup__input'
