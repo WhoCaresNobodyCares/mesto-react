@@ -11,11 +11,11 @@ const Main = () => {
         <div className='profile__information'>
           <div className='profile__wrap'>
             <h1 className='profile__username'></h1>
-            <button type='button' aria-label='Редактирование профиля' className='profile__edit'></button>
+            <button type='button' aria-label='Редактировать профиль' className='profile__edit'></button>
           </div>
           <p className='profile__description'></p>
         </div>
-        <button type='button' aria-label='Добавление фотографий' className='profile__add'></button>
+        <button type='button' aria-label='Добавить фото' className='profile__add'></button>
       </section>
       <section id='elements' className='elements'></section>
     </main>
