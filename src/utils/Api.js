@@ -1,4 +1,6 @@
-export default class Api {
+import apiConfig from './variables';
+
+class Api {
   constructor(url, token) {
     this._url = url;
     this._token = token;
@@ -81,3 +83,6 @@ export default class Api {
     }).then(response => this._handleResponse(response));
   }
 }
+
+const api = new Api(apiConfig.url, apiConfig.token);
+export default api;
