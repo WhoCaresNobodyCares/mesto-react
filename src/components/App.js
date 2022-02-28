@@ -4,16 +4,39 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
 
 function App() {
-  // document.querySelector('#profileEditPopup').classList.add('popup_opened');
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
+
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
+
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
+
+  const closeAllPopups = () => {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+  };
+
   return (
     <div className='body'>
       <Header />
-      <Main />
+      <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} />
       <Footer />
 
-      <PopupWithForm id='profileEditPopup' title='Редактировать профиль' formName='editForm' formId='editPopupForm' buttonText='Сохранить'>
+      <PopupWithForm
+        id='profileEditPopup'
+        title='Редактировать профиль'
+        formName='editForm'
+        formId='editPopupForm'
+        buttonText='Сохранить'
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+      >
         <input className='popup__input' type='text' name='nameInput' id='nameInput' placeholder='Имя' minLength='2' maxLength='40' required />
         <span id='nameInput-err' className='popup__error'></span>
         <input
@@ -29,7 +52,15 @@ function App() {
         <span id='descriptionInput-err' className='popup__error'></span>
       </PopupWithForm>
 
-      <PopupWithForm id='cardAddPopup' title='Новое место' formName='addForm' formId='addPopupForm' buttonText='Создать'>
+      <PopupWithForm
+        id='cardAddPopup'
+        title='Новое место'
+        formName='addForm'
+        formId='addPopupForm'
+        buttonText='Создать'
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
         <input
           className='popup__input'
           type='text'
@@ -45,12 +76,22 @@ function App() {
         <span id='linkInput-err' className='popup__error'></span>
       </PopupWithForm>
 
-      <PopupWithForm id='updatePopup' title='Обновить аватар' formName='updateForm' formId='updatePopupForm' buttonText='Сохранить'>
+      <PopupWithForm
+        id='updatePopup'
+        title='Обновить аватар'
+        formName='updateForm'
+        formId='updatePopupForm'
+        buttonText='Сохранить'
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+      >
         <input className='popup__input' type='url' name='pictureInput' id='pictureInput' placeholder='Ссылка на картинку' required />
         <span id='pictureInput-err' className='popup__error'></span>
       </PopupWithForm>
 
       <PopupWithForm id='confirmPopup' title='Вы уверены?' formName='confirmForm' formId='confirmPopupForm' buttonText='Да'></PopupWithForm>
+
+      <ImagePopup />
     </div>
   );
 }
