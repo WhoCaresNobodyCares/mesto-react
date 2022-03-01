@@ -2,9 +2,16 @@ import React from 'react';
 
 const Card = props => {
   return (
-    <div className='card' key={props.card._id}>
+    <div className='card'>
       <button type='button' aria-label='Удалить карточку' className='card__remove card__remove_hidden'></button>
-      <img src={props.card.link} alt={props.card.name} className='card__image' />
+      <img
+        src={props.card.link}
+        alt={props.card.name}
+        className='card__image'
+        onClick={() => {
+          props.onCardClick({ name: props.card.name, link: props.card.link });
+        }}
+      />
       <div className='card__description'>
         <h2 className='card__title'>{props.card.name}</h2>
         <div className='card__wrap'>

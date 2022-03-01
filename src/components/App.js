@@ -16,16 +16,25 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
 
+  const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' });
+  const handleCardClick = obj => setSelectedCard({ name: obj.name, link: obj.link });
+
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard({ name: '', link: '' });
   };
 
   return (
     <div className='body'>
       <Header />
-      <Main onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} />
+      <Main
+        onEditAvatar={handleEditAvatarClick}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onCardClick={handleCardClick}
+      />
       <Footer />
 
       <PopupWithForm
@@ -91,7 +100,7 @@ function App() {
 
       <PopupWithForm id='confirmPopup' title='Вы уверены?' formName='confirmForm' formId='confirmPopupForm' buttonText='Да'></PopupWithForm>
 
-      <ImagePopup />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }

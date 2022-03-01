@@ -40,7 +40,7 @@ const Main = props => {
       </section>
       <section id='elements' className='elements'>
         {cards.map(item => (
-          <Card card={item} />
+          <Card card={item} key={item._id} onCardClick={props.onCardClick} />
         ))}
       </section>
     </main>
