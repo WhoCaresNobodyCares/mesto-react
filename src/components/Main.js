@@ -7,24 +7,14 @@ import Card from './Card';
 const Main = props => {
   const userContext = React.useContext(UserContext);
 
-  console.log(userContext);
   // !!!
 
-  // const [userName, setUserName] = React.useState('');
-  // const [userDescription, setUserDescription] = React.useState('');
-  // const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api
-      .getAllInfo()
-      .then(([userData, array]) => {
-        // userId = userData._id;
-        // setUserName(userData.name);
-        // setUserDescription(userData.about);
-        // setUserAvatar(userData.avatar);
-        setCards(array);
-      })
+      .getArray()
+      .then(array => setCards(array))
       .catch(error => console.log(`WASTED - ${error}`));
   }, []);
 
