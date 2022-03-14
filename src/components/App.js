@@ -5,10 +5,12 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+
 import api from '../utils/Api';
+import UserContext from '../contexts/CurrentUserContext';
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({}); // created state variable
+  const [currentUser, setCurrentUser] = React.useState({});
 
   React.useEffect(() => {
     api
@@ -16,8 +18,6 @@ function App() {
       .then(userData => setCurrentUser(userData))
       .catch(error => console.log(`WASTED - ${error}`));
   }, []);
-
-  console.log(currentUser);
 
   // !!!
 
@@ -41,81 +41,83 @@ function App() {
   };
 
   return (
-    <div className='body'>
-      <Header />
-      <Main
-        onEditAvatar={handleEditAvatarClick}
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onCardClick={handleCardClick}
-      />
-      <Footer />
-
-      <PopupWithForm
-        id='profileEditPopup'
-        title='Редактировать профиль'
-        formName='editForm'
-        formId='editPopupForm'
-        buttonText='Сохранить'
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <input className='popup__input' type='text' name='nameInput' id='nameInput' placeholder='Имя' minLength='2' maxLength='40' required />
-        <span id='nameInput-err' className='popup__error'></span>
-        <input
-          className='popup__input'
-          type='text'
-          name='descriptionInput'
-          id='descriptionInput'
-          placeholder='Описание'
-          minLength='2'
-          maxLength='200'
-          required
+    <UserContext.Provider value={currentUser}>
+      <div className='body'>
+        <Header />
+        <Main
+          onEditAvatar={handleEditAvatarClick}
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick}
         />
-        <span id='descriptionInput-err' className='popup__error'></span>
-      </PopupWithForm>
+        <Footer />
 
-      <PopupWithForm
-        id='cardAddPopup'
-        title='Новое место'
-        formName='addForm'
-        formId='addPopupForm'
-        buttonText='Создать'
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <input
-          className='popup__input'
-          type='text'
-          name='placeInput'
-          id='placeInput'
-          placeholder='Название'
-          minLength='2'
-          maxLength='30'
-          required
-        />
-        <span id='placeInput-err' className='popup__error'></span>
-        <input className='popup__input' type='url' name='linkInput' id='linkInput' placeholder='Ссылка на картинку' required />
-        <span id='linkInput-err' className='popup__error'></span>
-      </PopupWithForm>
+        <PopupWithForm
+          id='profileEditPopup'
+          title='Редактировать профиль'
+          formName='editForm'
+          formId='editPopupForm'
+          buttonText='Сохранить'
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <input className='popup__input' type='text' name='nameInput' id='nameInput' placeholder='Имя' minLength='2' maxLength='40' required />
+          <span id='nameInput-err' className='popup__error'></span>
+          <input
+            className='popup__input'
+            type='text'
+            name='descriptionInput'
+            id='descriptionInput'
+            placeholder='Описание'
+            minLength='2'
+            maxLength='200'
+            required
+          />
+          <span id='descriptionInput-err' className='popup__error'></span>
+        </PopupWithForm>
 
-      <PopupWithForm
-        id='updatePopup'
-        title='Обновить аватар'
-        formName='updateForm'
-        formId='updatePopupForm'
-        buttonText='Сохранить'
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-      >
-        <input className='popup__input' type='url' name='pictureInput' id='pictureInput' placeholder='Ссылка на картинку' required />
-        <span id='pictureInput-err' className='popup__error'></span>
-      </PopupWithForm>
+        <PopupWithForm
+          id='cardAddPopup'
+          title='Новое место'
+          formName='addForm'
+          formId='addPopupForm'
+          buttonText='Создать'
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <input
+            className='popup__input'
+            type='text'
+            name='placeInput'
+            id='placeInput'
+            placeholder='Название'
+            minLength='2'
+            maxLength='30'
+            required
+          />
+          <span id='placeInput-err' className='popup__error'></span>
+          <input className='popup__input' type='url' name='linkInput' id='linkInput' placeholder='Ссылка на картинку' required />
+          <span id='linkInput-err' className='popup__error'></span>
+        </PopupWithForm>
 
-      <PopupWithForm id='confirmPopup' title='Вы уверены?' formName='confirmForm' formId='confirmPopupForm' buttonText='Да'></PopupWithForm>
+        <PopupWithForm
+          id='updatePopup'
+          title='Обновить аватар'
+          formName='updateForm'
+          formId='updatePopupForm'
+          buttonText='Сохранить'
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        >
+          <input className='popup__input' type='url' name='pictureInput' id='pictureInput' placeholder='Ссылка на картинку' required />
+          <span id='pictureInput-err' className='popup__error'></span>
+        </PopupWithForm>
 
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-    </div>
+        <PopupWithForm id='confirmPopup' title='Вы уверены?' formName='confirmForm' formId='confirmPopupForm' buttonText='Да'></PopupWithForm>
+
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+      </div>
+    </UserContext.Provider>
   );
 }
 
