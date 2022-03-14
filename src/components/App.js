@@ -5,8 +5,22 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import api from '../utils/Api';
 
 function App() {
+  const [currentUser, setCurrentUser] = React.useState({}); // created state variable
+
+  React.useEffect(() => {
+    api
+      .getUserInfo()
+      .then(userData => setCurrentUser(userData))
+      .catch(error => console.log(`WASTED - ${error}`));
+  }, []);
+
+  console.log(currentUser);
+
+  // !!!
+
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
 
