@@ -6,7 +6,7 @@ const PopupWithForm = props => {
       <div className='popup__body'>
         <button type='button' aria-label='Закрыть всплывающее окно' className='popup__close' onClick={props.onClose}></button>
         <h2 className='popup__title'>{props.title}</h2>
-        <form action='#' method='post' name={props.formName} id={props.formId} className='popup__form'>
+        <form action='#' method='post' name={props.formName} id={props.formId} className='popup__form' onSubmit={props.onSubmit}>
           {props.children}
           <button type='submit' className='popup__submit'>
             {props.buttonText}

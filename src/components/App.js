@@ -3,11 +3,13 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
+import PopupWithForm from './PopupWithForm'; // !!!
 import ImagePopup from './ImagePopup';
 
 import api from '../utils/Api';
 import UserContext from '../contexts/CurrentUserContext';
+
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -18,8 +20,6 @@ function App() {
       .then(userData => setCurrentUser(userData))
       .catch(error => console.log(`WASTED - ${error}`));
   }, []);
-
-  // !!!
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
@@ -40,6 +40,13 @@ function App() {
     setSelectedCard({ name: '', link: '' });
   };
 
+  function handleUpdateUser(data) {
+    api
+      .setInfo(data.name, data.about)
+      .then(userData => setCurrentUser(userData))
+      .then(() => closeAllPopups());
+  }
+
   return (
     <UserContext.Provider value={currentUser}>
       <div className='body'>
@@ -52,29 +59,7 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm
-          id='profileEditPopup'
-          title='Редактировать профиль'
-          formName='editForm'
-          formId='editPopupForm'
-          buttonText='Сохранить'
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input className='popup__input' type='text' name='nameInput' id='nameInput' placeholder='Имя' minLength='2' maxLength='40' required />
-          <span id='nameInput-err' className='popup__error'></span>
-          <input
-            className='popup__input'
-            type='text'
-            name='descriptionInput'
-            id='descriptionInput'
-            placeholder='Описание'
-            minLength='2'
-            maxLength='200'
-            required
-          />
-          <span id='descriptionInput-err' className='popup__error'></span>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
         <PopupWithForm
           id='cardAddPopup'

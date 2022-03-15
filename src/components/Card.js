@@ -4,7 +4,7 @@ import UserContext from '../contexts/CurrentUserContext';
 const Card = props => {
   const currentUser = React.useContext(UserContext);
 
-  const isOwn = props.card._id === currentUser._id;
+  const isOwn = props.card.owner._id === currentUser._id;
   const cardDeleteButtonClassName = `card__remove ${isOwn ? `` : `card__remove_hidden`}`;
 
   const isLiked = props.card.likes.some(item => item._id === currentUser._id);
@@ -12,7 +12,14 @@ const Card = props => {
 
   return (
     <div className='card'>
-      <button type='button' aria-label='Удалить карточку' className={cardDeleteButtonClassName}></button>
+      <button
+        type='button'
+        aria-label='Удалить карточку'
+        className={cardDeleteButtonClassName}
+        onClick={() => {
+          props.onCardDelete(props.card);
+        }}
+      ></button>
       <img
         src={props.card.link}
         alt={props.card.name}
