@@ -3,12 +3,10 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm'; // !!!
+import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-
 import api from '../utils/Api';
 import UserContext from '../contexts/CurrentUserContext';
-
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
@@ -20,6 +18,10 @@ function App() {
     api
       .getUserInfo()
       .then(userData => setCurrentUser(userData))
+      .catch(error => console.log(`WASTED - ${error}`));
+    api
+      .getArray()
+      .then(array => setCards(array))
       .catch(error => console.log(`WASTED - ${error}`));
   }, []);
 
@@ -34,6 +36,8 @@ function App() {
 
   const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' });
   const handleCardClick = obj => setSelectedCard({ name: obj.name, link: obj.link });
+
+  const [cards, setCards] = React.useState([]);
 
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
@@ -58,15 +62,6 @@ function App() {
       .catch(error => console.log(`WASTED - ${error}`));
   }
 
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api
-      .getArray()
-      .then(array => setCards(array))
-      .catch(error => console.log(`WASTED - ${error}`));
-  }, []);
-
   function handleCardLike(card) {
     const isLiked = card.likes.some(item => item._id === currentUser._id);
     if (!isLiked) {
@@ -90,7 +85,6 @@ function App() {
   }
 
   function handleAddPlaceSubmit(card) {
-    console.log(card);
     api
       .addCard(card.name, card.link)
       .then(card => setCards([card, ...cards]))
@@ -107,7 +101,6 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
-          //
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}

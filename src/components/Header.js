@@ -1,5 +1,4 @@
 import React from 'react';
-
 import logoPath from '../images/header__logo.svg';
 
 const Header = () => {
