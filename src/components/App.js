@@ -11,6 +11,7 @@ import UserContext from '../contexts/CurrentUserContext';
 
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -45,7 +46,56 @@ function App() {
     api
       .setInfo(data.name, data.about)
       .then(userData => setCurrentUser(userData))
-      .then(() => closeAllPopups());
+      .then(() => closeAllPopups())
+      .catch(error => console.log(`WASTED - ${error}`));
+  }
+
+  function handleUpdateAvatar(data) {
+    api
+      .setAvatar(data.avatar)
+      .then(userData => setCurrentUser(userData))
+      .then(() => closeAllPopups())
+      .catch(error => console.log(`WASTED - ${error}`));
+  }
+
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    api
+      .getArray()
+      .then(array => setCards(array))
+      .catch(error => console.log(`WASTED - ${error}`));
+  }, []);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(item => item._id === currentUser._id);
+    if (!isLiked) {
+      api
+        .putLike(card._id)
+        .then(likedCard => setCards(state => state.map(c => (c._id === card._id ? likedCard : c))))
+        .catch(error => console.log(`WASTED - ${error}`));
+    } else {
+      api
+        .removeLike(card._id)
+        .then(unlikedCard => setCards(state => state.map(c => (c._id === card._id ? unlikedCard : c))))
+        .catch(error => console.log(`WASTED - ${error}`));
+    }
+  }
+
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card._id)
+      .then(() => setCards(cards.filter(item => item._id !== card._id)))
+      .catch(error => console.log(`WASTED - ${error}`));
+  }
+
+  function handleAddPlaceSubmit(card) {
+    console.log(card);
+    api
+      .addCard(card.name, card.link)
+      .then(card => setCards([card, ...cards]))
+      .then(() => closeAllPopups())
+      .catch(error => console.log(`WASTED - ${error}`));
   }
 
   return (
@@ -57,36 +107,16 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
+          //
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-
-        <PopupWithForm
-          id='cardAddPopup'
-          title='Новое место'
-          formName='addForm'
-          formId='addPopupForm'
-          buttonText='Создать'
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            className='popup__input'
-            type='text'
-            name='placeInput'
-            id='placeInput'
-            placeholder='Название'
-            minLength='2'
-            maxLength='30'
-            required
-          />
-          <span id='placeInput-err' className='popup__error'></span>
-          <input className='popup__input' type='url' name='linkInput' id='linkInput' placeholder='Ссылка на картинку' required />
-          <span id='linkInput-err' className='popup__error'></span>
-        </PopupWithForm>
-
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onUpdateCards={handleAddPlaceSubmit} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
         <PopupWithForm id='confirmPopup' title='Вы уверены?' formName='confirmForm' formId='confirmPopupForm' buttonText='Да'></PopupWithForm>
 

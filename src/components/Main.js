@@ -8,27 +8,27 @@ import UserContext from '../contexts/CurrentUserContext';
 const Main = props => {
   const currentUser = React.useContext(UserContext);
 
-  const [cards, setCards] = React.useState([]);
+  // const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
-    api
-      .getArray()
-      .then(array => setCards(array))
-      .catch(error => console.log(`WASTED - ${error}`));
-  }, []);
+  // React.useEffect(() => {
+  //   api
+  //     .getArray()
+  //     .then(array => setCards(array))
+  //     .catch(error => console.log(`WASTED - ${error}`));
+  // }, []);
 
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(item => item._id === currentUser._id);
-    if (!isLiked) {
-      api.putLike(card._id).then(likedCard => setCards(state => state.map(c => (c._id === card._id ? likedCard : c))));
-    } else {
-      api.removeLike(card._id).then(unlikedCard => setCards(state => state.map(c => (c._id === card._id ? unlikedCard : c))));
-    }
-  }
+  // function handleCardLike(card) {
+  //   const isLiked = card.likes.some(item => item._id === currentUser._id);
+  //   if (!isLiked) {
+  //     api.putLike(card._id).then(likedCard => setCards(state => state.map(c => (c._id === card._id ? likedCard : c))));
+  //   } else {
+  //     api.removeLike(card._id).then(unlikedCard => setCards(state => state.map(c => (c._id === card._id ? unlikedCard : c))));
+  //   }
+  // }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => setCards(cards.filter(item => item._id !== card._id)));
-  }
+  // function handleCardDelete(card) {
+  //   api.deleteCard(card._id).then(() => setCards(cards.filter(item => item._id !== card._id)));
+  // }
 
   return (
     <main className='main body__main'>
@@ -47,8 +47,8 @@ const Main = props => {
         <button type='button' aria-label='Добавить фото' className='profile__add' onClick={props.onAddPlace}></button>
       </section>
       <section id='elements' className='elements'>
-        {cards.map(item => (
-          <Card card={item} key={item._id} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
+        {props.cards.map(item => (
+          <Card card={item} key={item._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} />
         ))}
       </section>
     </main>
