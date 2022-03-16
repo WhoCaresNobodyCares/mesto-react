@@ -10,6 +10,7 @@ import api from '../utils/Api';
 import UserContext from '../contexts/CurrentUserContext';
 
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -85,18 +86,7 @@ function App() {
           <span id='linkInput-err' className='popup__error'></span>
         </PopupWithForm>
 
-        <PopupWithForm
-          id='updatePopup'
-          title='Обновить аватар'
-          formName='updateForm'
-          formId='updatePopupForm'
-          buttonText='Сохранить'
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input className='popup__input' type='url' name='pictureInput' id='pictureInput' placeholder='Ссылка на картинку' required />
-          <span id='pictureInput-err' className='popup__error'></span>
-        </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
 
         <PopupWithForm id='confirmPopup' title='Вы уверены?' formName='confirmForm' formId='confirmPopupForm' buttonText='Да'></PopupWithForm>
 
