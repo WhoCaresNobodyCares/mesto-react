@@ -5,6 +5,11 @@ function AddPlacePopup(props) {
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
 
+  React.useEffect(() => {
+    setName('');
+    setLink('');
+  }, [props.isOpen]);
+
   function handleAddPlaceSubmit(e) {
     e.preventDefault();
     props.onUpdateCards({ name: name, link: link });
@@ -39,6 +44,7 @@ function AddPlacePopup(props) {
         maxLength='30'
         required
         onChange={handleNameChange}
+        value={name || ''}
       />
       <span id='placeInput-err' className='popup__error'></span>
       <input
@@ -49,6 +55,7 @@ function AddPlacePopup(props) {
         placeholder='Ссылка на картинку'
         required
         onChange={handleLinkChange}
+        value={link || ''}
       />
       <span id='linkInput-err' className='popup__error'></span>
     </PopupWithForm>

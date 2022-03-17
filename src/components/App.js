@@ -12,7 +12,17 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
 function App() {
+  const [cards, setCards] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' });
+
+  const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
+  const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
+  const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
+  const handleCardClick = card => setSelectedCard({ name: card.name, link: card.link });
 
   React.useEffect(() => {
     api
@@ -24,20 +34,6 @@ function App() {
       .then(array => setCards(array))
       .catch(error => console.log(`WASTED - ${error}`));
   }, []);
-
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
-
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
-
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
-
-  const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' });
-  const handleCardClick = obj => setSelectedCard({ name: obj.name, link: obj.link });
-
-  const [cards, setCards] = React.useState([]);
 
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
@@ -80,7 +76,7 @@ function App() {
   function handleCardDelete(card) {
     api
       .deleteCard(card._id)
-      .then(() => setCards(cards.filter(item => item._id !== card._id)))
+      .then(() => setCards(cards => cards.filter(item => item._id !== card._id)))
       .catch(error => console.log(`WASTED - ${error}`));
   }
 
