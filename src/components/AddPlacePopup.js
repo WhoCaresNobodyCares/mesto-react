@@ -10,6 +10,8 @@ function AddPlacePopup(props) {
     setLink('');
   }, [props.isOpen]);
 
+  // !!!
+
   function handleAddPlaceSubmit(e) {
     e.preventDefault();
     props.onUpdateCards({ name: name, link: link });
